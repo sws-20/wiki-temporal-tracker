@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wikipedia Temporal Quantity Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">📊</div>
+    <h1>Wikipedia <span>Temporal</span> Quantity Tracker</h1>
+  </div>
+  <button class="theme-toggle" id="themeToggle">☀️ Light</button>
+</header>
+
+<main>
+
+  <!-- ── Search Panel ── -->
+  <div class="search-panel">
+    <h2>Query Parameters</h2>
+    <div class="search-row">
+      <div class="field">
+        <label for="entityInput">Entity Name</label>
+        <input id="entityInput" type="text" placeholder="e.g. Elon Musk, New York City" />
+      </div>
+      <div class="field">
+        <label for="attrInput">Attribute</label>
+        <input id="attrInput" type="text" placeholder="e.g. net_worth, population" />
+      </div>
+      <div class="field">
+        <label for="attrSelect">Quick Select</label>
+        <select id="attrSelect">
+          <option value="">— loading —</option>
+        </select>
+      </div>
+      <button class="btn-load" id="loadBtn">⚡ Load Data</button>
+      <button class="btn-upload" id="uploadBtn">📂 Upload JSON</button>
+      <input type="file" id="fileInput" accept=".json" style="display:none" />
+    </div>
+  </div>
+
+  <!-- ── Metrics Cards ── -->
+  <div class="metrics-grid">
+    <div class="metric-card drift">
+      <div class="metric-label">Drift Velocity</div>
+      <div class="metric-value" id="metricVelocity">—</div>
+      <div class="metric-sub">Average change per month</div>
+    </div>
+    <div class="metric-card stability">
+      <div class="metric-label">Stability Score</div>
+      <div class="metric-value" id="metricStability">—</div>
+      <div class="metric-sub">Value changes per month</div>
+    </div>
+    <div class="metric-card anomaly">
+      <div class="metric-label">Anomalies Detected</div>
+      <div class="metric-value" id="metricAnomalies">—</div>
+      <div class="metric-sub">IQR outlier detection</div>
+    </div>
+  </div>
+
+  <!-- ── Timeline Chart ── -->
+  <div class="chart-panel">
+    <div class="panel-header">
+      <span class="panel-title">Timeline Chart</span>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#6c63ff"></span>Value</span>
+        <span><span class="legend-dot" style="background:#ff4d6d"></span>Anomaly</span>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="timelineChart"></canvas>
+    </div>
+  </div>
+
+  <!-- ── Data Table ── -->
+  <div class="table-panel">
+    <div class="panel-header">
+      <span class="panel-title">Extracted Quantities</span>
+      <div class="table-controls">
+        <input class="search-input" id="tableSearch" type="text" placeholder="🔍 Filter rows…" />
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th data-col="timestamp">Timestamp <span class="sort-icon">↑</span></th>
+          <th data-col="value">Value <span class="sort-icon">↕</span></th>
+          <th data-col="unit">Unit <span class="sort-icon">↕</span></th>
+          <th data-col="text">Extracted Text <span class="sort-icon">↕</span></th>
+          <th data-col="attribute">Attribute <span class="sort-icon">↕</span></th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td colspan="6">
+            <div class="empty-state">
+              <div class="icon">📡</div>
+              <p>Loading data…</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
